@@ -13,6 +13,7 @@ def create_app() -> FastAPI:
     return app
 
 
+# Redis
 def get_redis_client() -> Redis:
     pool = ConnectionPool(
         host=REDIS_HOST,
@@ -25,9 +26,7 @@ def get_redis_client() -> Redis:
 
 
 cache_queue = get_redis_client()
-
 Base = declarative_base()
-
 engine = create_engine(
     PGSQL_URL,
     pool_size=10,
@@ -38,13 +37,11 @@ engine = create_engine(
     echo=False,
     future=True,
 )
-
 SessionLocal = sessionmaker(
     autocommit=False,
     autoflush=False,
     expire_on_commit=False,
     bind=engine,
 )
-
 # 如果你想要线程安全的 session，也可以这么写
 DBSession = scoped_session(SessionLocal)

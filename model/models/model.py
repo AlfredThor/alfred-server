@@ -37,7 +37,7 @@ class User(Base, BaseModel):
     __tablename__ = 'user'
 
     id = Column(Integer, primary_key=True, autoincrement=True, comment='用户ID')
-    uuid = Column(String(32), index=True,unique=True, default=tool_tool.generate_uuid)
+    user_uuid = Column(String(32), index=True,unique=True, default=tool_tool.generate_uuid)
     username = Column(String(50), unique=True, nullable=False, comment='用户名')
     email = Column(String(100), unique=True, nullable=True, comment='电子邮件')
     password = Column(String(255), nullable=False, comment='密码（加密存储）')
@@ -52,9 +52,10 @@ class Category(Base, BaseModel):
     __tablename__ = 'category'
 
     id = Column(Integer, primary_key=True, autoincrement=True, comment='分类ID')
-    uuid = Column(String(32), index=True,unique=True, default=tool_tool.generate_uuid)
+    category_uuid = Column(String(32), index=True,unique=True, default=tool_tool.generate_uuid)
     name = Column(String(50), unique=True, nullable=False, comment='分类名称')
     description = Column(Text, nullable=True, comment='分类描述')
+    status = Column(Integer, nullable=False, default=0, comment='是否启用 0未启用/1启用')
 
 
 class Tag(Base, BaseModel):
@@ -64,7 +65,7 @@ class Tag(Base, BaseModel):
     __tablename__ = 'tag'
 
     id = Column(Integer, primary_key=True, autoincrement=True, comment='标签ID')
-    uuid = Column(String(32), index=True,unique=True, default=tool_tool.generate_uuid)
+    tag_uuid = Column(String(32), index=True,unique=True, default=tool_tool.generate_uuid)
     name = Column(String(30), unique=True, nullable=False, comment='标签名称')
 
 
@@ -75,16 +76,14 @@ class Article(Base, BaseModel):
     __tablename__ = 'article'
 
     id = Column(Integer, primary_key=True, autoincrement=True, comment='文章ID')
-    uuid = Column(String(32), index=True,unique=True, default=tool_tool.generate_uuid)
+    article_uuid = Column(String(32), index=True,unique=True, default=tool_tool.generate_uuid)
     title = Column(String(200), nullable=False, comment='文章标题')
     content = Column(Text, nullable=False, comment='文章内容')
     summary = Column(Text, nullable=True, comment='文章摘要')
-    author_id = Column(Integer, nullable=False, comment='作者ID（对应 user.id）')
-    category_id = Column(Integer, nullable=True, comment='分类ID（对应 category.id）')
-    tag_ids = Column(String(255), nullable=True, comment='文章标签ID列表（逗号分隔）')
+    username = Column(Integer, nullable=False, comment='作者ID（对应 user.id）')
+    category_name = Column(String(18), nullable=True, comment='分类名称')
+    tag_names = Column(JSON, nullable=True, comment='文章标签[]')
     is_published = Column(Boolean, default=True, comment='是否发布')
-    create_time = Column(DateTime, default=datetime.now, comment='创建时间')
-    update_time = Column(DateTime, default=datetime.now, onupdate=datetime.now, comment='更新时间')
 
 
 class Comment(Base, BaseModel):
@@ -92,11 +91,10 @@ class Comment(Base, BaseModel):
     评论表：用户对文章的评论
     """
     __tablename__ = 'comment'
-
     id = Column(Integer, primary_key=True, autoincrement=True, comment='评论ID')
-    uuid = Column(String(32), index=True,unique=True, default=tool_tool.generate_uuid)
-    article_id = Column(Integer, nullable=False, comment='文章ID（对应 article.id）')
-    user_id = Column(Integer, nullable=True, comment='评论用户ID（对应 user.id，可匿名）')
+    comment_uuid = Column(String(32), index=True,unique=True, default=tool_tool.generate_uuid)
+    article_uuid = Column(Integer, nullable=False, comment='文章ID（对应 article.id）')
+    username_uuid = Column(Integer, nullable=True, comment='评论用户ID（对应 user.id，可匿名）')
     content = Column(Text, nullable=False, comment='评论内容')
     is_reviewed = Column(Boolean, default=False, comment='是否已审核')
 
@@ -108,7 +106,7 @@ class FriendLink(Base, BaseModel):
     __tablename__ = 'friend_link'
 
     id = Column(Integer, primary_key=True, autoincrement=True, comment='友链ID')
-    uuid = Column(String(32), index=True,unique=True, default=tool_tool.generate_uuid)
+    friend_link_uuid = Column(String(32), index=True,unique=True, default=tool_tool.generate_uuid)
     name = Column(String(50), nullable=False, comment='网站名称')
     url = Column(String(200), nullable=False, comment='网站链接')
     description = Column(String(255), nullable=True, comment='链接说明')
@@ -135,7 +133,7 @@ class VisitLog(Base, BaseModel):
     __tablename__ = 'visit_log'
 
     id = Column(Integer, primary_key=True, autoincrement=True, comment='访问记录ID')
-    uuid = Column(String(32), index=True,unique=True, default=tool_tool.generate_uuid)
+    visit_log_uuid = Column(String(32), index=True,unique=True, default=tool_tool.generate_uuid)
     ip = Column(String(50), nullable=True, comment='访问者IP地址')
     path = Column(String(255), nullable=False, comment='访问路径')
     user_agent = Column(String(255), nullable=True, comment='User-Agent')

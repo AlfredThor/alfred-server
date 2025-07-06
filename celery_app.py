@@ -25,3 +25,4 @@ class CeleryApp:
 
 # 实例化并导出 app 供其他模块使用
 celery_app = CeleryApp().get_app()
+celery_app.autodiscover_tasks(["tasks"])
