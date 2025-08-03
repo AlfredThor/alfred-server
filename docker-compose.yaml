@@ -1,0 +1,41 @@
+version: "3"
+services:
+  fastapi:
+    build: .
+    expose:
+      - "8003"
+    ports:
+      - "7010:7010"
+    volumes:
+      - .:/alfred-server
+    command: >
+      sh -c "[ -e /var/run/supervisor.sock ] && unlink /var/run/supervisor.sock; exec supervisord -n"
+    restart: always
+
+  celery_worker:
+    build: .
+    command: celery -A celery_app.celery_app worker --loglevel=info --logfile=/alfred-server/log/celery/worker.log
+    volumes:
+      - .:/alfred-server
+    environment:
+      - PYTHONPATH=/alfred-server
+    restart: always
+
+  nginx:
+    build: construction/nginx
+    ports:
+      - "7001:7001"
+      - "7002:7002"
+    expose:
+      - "7001"
+      - "7002"
+    volumes:
+      - ./log/nginx:/log
+      - ./construction/nginx/dist:/usr/share/nginx/html
+      - ./construction/nginx/conf.d:/etc/nginx/conf.d
+      - ./construction/nginx/ssl:/etc/nginx/ssl
+    links:
+      - fastapi
+    depends_on:
+      - fastapi
+    restart: always

@@ -1,8 +1,9 @@
 from datetime import datetime
 from settings.tools.tool import tool_tool
 from config.config import Base
+from decimal import Decimal
 from sqlalchemy.dialects.postgresql import ARRAY, JSONB
-from sqlalchemy import Column, Integer, String, DateTime, JSON, TEXT, Date, Boolean, Text
+from sqlalchemy import Column, Integer, String, DateTime, JSON, TEXT, Date, Boolean, Text, Numeric
 
 
 '''Postgres'''
@@ -207,3 +208,50 @@ class ChatUserOnline(Base, BaseModel):
     username = Column(String(50), nullable=True, comment='昵称')
     ip = Column(String(50), nullable=True, comment='IP地址')
     join_time = Column(DateTime, default=datetime.now, comment='加入时间')
+
+
+class Monthes(BaseModel, Base):
+    __tablename__ = 'monthes'
+    id = Column(Integer, primary_key=True, index=True) # 自增ID
+    uuid = Column(String(32), index=True, default=tool_tool.generate_uuid)
+    work_type = Column(String(10), nullable=True, comment='班次')
+    fuk_dan = Column(Numeric(10, 2), nullable=True, default=lambda: Decimal('0.00'), comment='账单金额')
+    user_bank_name = Column(String(64), nullable=False, comment='客户银行名称')
+    user_bank_number = Column(String(64), nullable=False, comment='客户银行帐号')
+    card_type = Column(String(64), nullable=True, comment='卡种')
+    card_country = Column(String(64), nullable=True, comment='卡国家')
+    card_code = Column(String(64), nullable=True, comment='卡代码')
+    user_name = Column(String(64), nullable=True, comment='客户名')
+    equipment = Column(String(10), nullable=True, comment='客服设备')
+    serial = Column(Integer, nullable=True, comment='当日流水号')
+    auth_name = Column(String(10), nullable=True, comment='客服')
+    handling = Column(Numeric(10, 2), nullable=True, default=lambda: Decimal('0.00'), comment='手续费')
+    user_remark = Column(String(128), nullable=True, comment='客户备注')
+
+    card_balance = Column(Numeric(10, 2), nullable=True, default=lambda: Decimal('0.00'), comment='卡金额')
+    card_rate = Column(Numeric(10, 2), nullable=True, default=lambda: Decimal('0.00'), comment='卡汇率')
+    acquisition = Column(Numeric(10, 2), nullable=True, default=lambda: Decimal('0.00'), comment='收购金额')
+    selling = Column(Numeric(10, 2), nullable=True, default=lambda: Decimal('0.00'), comment='出售金额')
+    rate = Column(Numeric(10, 2), nullable=True, default=lambda: Decimal('0.00'), comment='汇率')
+    naila_balance = Column(Numeric(10, 2), nullable=True, default=lambda: Decimal('0.00'), comment='奈拉余额')
+    money = Column(Numeric(10, 2), nullable=True, default=lambda: Decimal('0.00'), comment='利润')
+    channel = Column(String(10, ), nullable=True, comment='出卡渠道')
+    img = Column(String(256), nullable=True, comment='付款图片')
+    # case = Column(String(10), nullable=True, comment='失败原因')
+    status = Column(Integer, nullable=True, default=0) # 0待处理/1打款失败/2付款成果/3等待
+
+    '''
+    {
+        "fuk_dan": "153295",    # 
+        "user_bank_name": "Opay",
+        "user_bank_number": "7073832702",
+        "user_name": "adam ballarabe musa",
+        "card_info": {
+            "card_type": "Apple",
+            "card_country": "USA",
+            "card_code": "XJ535Q82JRNKQM3L",
+            "card_balance": "150",
+            "card_rate": "5.4"
+        }
+    }
+    '''

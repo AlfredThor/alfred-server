@@ -1,0 +1,1 @@
+.article-card{display:flex;gap:14px}.article-card img{width:120px;object-fit:cover;border-radius:4px}.article-card .content{flex:1}.article-card .content .button{white-space:normal;word-break:break-word;padding:0}.title{display:inline-block;max-width:100%;font-weight:700;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}

@@ -1,0 +1,1 @@
+import{s as t}from"./index-BdyWt8Po.js";const a={index:{index:t.defaults.baseURL+"/index"},chat:{list:t.defaults.baseURL+"/chat/list"},auth:{auth_list:t.defaults.baseURL+"/auth/list",auth_add:t.defaults.baseURL+"/auth/add"},terminus:{terminus_list:t.defaults.baseURL+"/terminus/list",terminus_add:t.defaults.baseURL+"/terminus/add"}};export{a as A};
