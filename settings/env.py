@@ -26,7 +26,8 @@ PG_USERNAME = os.getenv('DB_USERNAME', 'alfred')
 # 数据库密码
 PG_PASSWORD = os.getenv('DB_PASSWORD', 'Admin911$')
 # MySQL数据库链接(当前使用的数据库)
-PGSQL_URL = 'postgresql://' + PG_USERNAME + ':' + PG_PASSWORD + '@' + PG_HOST + ':' + str(PG_PORT) + '/' + PG_DATABASE + '?connect_timeout=10'
+# PGSQL_URL = 'postgresql://' + PG_USERNAME + ':' + PG_PASSWORD + '@' + PG_HOST + ':' + str(PG_PORT) + '/' + PG_DATABASE + '?connect_timeout=10'
+PGSQL_URL = 'postgresql+asyncpg://' + PG_USERNAME + ':' + PG_PASSWORD + '@' + PG_HOST + ':' + str(PG_PORT) + '/' + PG_DATABASE
 
 
 # =============================================== 缓存配置 =================================================

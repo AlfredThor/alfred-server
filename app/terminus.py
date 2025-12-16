@@ -51,7 +51,7 @@ class Terminus_router(APIRouter):
         if end_time:
             search_dict['end_time'] = end_time
 
-        return BaseCurd(db, Monthes).query_(search_dict)
+        return await BaseCurd(db, Monthes).query_(search_dict)
 
 
     async def terminus_add(self, items: Finance_scheam, db: Session = Depends(get_db)):

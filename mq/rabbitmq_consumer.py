@@ -2,6 +2,7 @@ from aio_pika import connect_robust, IncomingMessage
 from config.rabbitmq import RABBITMQ_URL
 
 
+'''生产者'''
 class RabbitMQConsumer:
     def __init__(self, queue_name: str):
         self.queue_name = queue_name

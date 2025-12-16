@@ -4,7 +4,8 @@ from fastapi import FastAPI
 from model.models import model
 from sqlalchemy import inspect
 from mq.handle import handle_message
-from config.config import Base, engine
+from config.config import engine
+from model.models.model import Base
 from contextlib import asynccontextmanager
 from fastapi.staticfiles import StaticFiles
 from mq.rabbitmq_consumer import RabbitMQConsumer
@@ -19,26 +20,33 @@ consumer = RabbitMQConsumer(queue_name="my_queue")
 #
 #
 # # ========= 创建数据表实例 =========
-def create_db():
-    inspector = inspect(engine)
-    existing_tables = set(inspector.get_table_names())
+async def create_db():
+    async with engine.begin() as conn:
+        # 打印现有表
+        inspector = await conn.run_sync(lambda conn: inspect(conn).get_table_names())
+        print(inspector)
 
-    print("🔍 已加载模型表:", [t.name for t in Base.metadata.sorted_tables])
-
-    for table in Base.metadata.sorted_tables:
-        if table.name not in existing_tables:
-            print(f"✅ 创建表：{table.name}")
-        else:
-            print(f"⏩ 跳过已有表：{table.name}")
-
-    Base.metadata.create_all(bind=engine)
+        # 创建表
+        await conn.run_sync(Base.metadata.create_all)
+    # inspector = inspect(engine)
+    # existing_tables = set(inspector.get_table_names())
+    #
+    # print("🔍 已加载模型表:", [t.name for t in Base.metadata.sorted_tables])
+    #
+    # for table in Base.metadata.sorted_tables:
+    #     if table.name not in existing_tables:
+    #         print(f"✅ 创建表：{table.name}")
+    #     else:
+    #         print(f"⏩ 跳过已有表：{table.name}")
+    #
+    # Base.metadata.create_all(bind=engine)
 #
 #
 # # ========= lifespan 生命周期处理器 =========
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # ✅ 启动前，创建数据库表（如果不存在）
-    create_db()
+    await create_db()
     # 启动前
     asyncio.create_task(consumer.consume(handle_message))
     print("🐇 RabbitMQ consumer started (via lifespan)")
@@ -76,8 +84,8 @@ app.include_router(friend_link_router, prefix='/friend/links', tags=['友链'])
 app.include_router(visit_log_router, prefix='/logger', tags=['日志'])
 app.include_router(donation_router, prefix='/donation', tags=['打赏'])
 app.include_router(chat_router.router, prefix='/chat', tags=['聊天室'])
-app.include_router(monthes_router, prefix='/auth', tags=['客服'])
-app.include_router(finance_router, prefix='/finance', tags=['财务'])
+# app.include_router(monthes_router, prefix='/auth', tags=['客服'])
+# app.include_router(finance_router, prefix='/finance', tags=['财务'])
 app.include_router(terminus_router, prefix='/terminus', tags=['终端'])
 
 

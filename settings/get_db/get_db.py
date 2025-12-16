@@ -1,9 +1,11 @@
-from config.config import SessionLocal
+from config.config import async_session
 
 
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+async def get_db():
+    # db = SessionLocal()
+    # try:
+    #     yield db
+    # finally:
+    #     db.close()
+    async with async_session() as session:
+        yield session

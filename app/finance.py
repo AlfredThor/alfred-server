@@ -30,7 +30,7 @@ class Finance_router(APIRouter):
             },
             'is_first': True if type_ == 0 else False,  # 是否返回一条数据
             'pagination': {'current': current, 'page_size': page_size}  # 分页 current:第几页/page_size:每页多少数据
-}
+        }
 
         curd = {}
         if auth_name:

@@ -1,6 +1,8 @@
 from sqlalchemy.orm import Session
 from fastapi import APIRouter, Depends
 from settings.get_db.get_db import get_db
+from model.crud.base_crud import BaseCurd
+from model.models.model import Article
 from model.scheam.acticle_scheam import Article_scheam
 from settings.verify_token.verify_token import get_token_header
 
@@ -16,6 +18,9 @@ class Article_router(APIRouter):
 
     async def list(self, user_id: int, db: Session = Depends(get_db)):
         # 列表
+        info_ = BaseCurd(db, Article).query_({
+            'curd':{},
+        })
         return {"msg": f"User ID: {user_id}"}
 
     async def add(self,items: Article_scheam):

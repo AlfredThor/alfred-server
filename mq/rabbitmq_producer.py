@@ -2,6 +2,7 @@ from aio_pika import connect_robust, Message
 from config.rabbitmq import RABBITMQ_URL
 
 
+'''消费者'''
 class RabbitMQProducer:
     def __init__(self):
         self.connection = None

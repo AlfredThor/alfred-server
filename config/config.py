@@ -7,6 +7,8 @@ from sqlalchemy.orm import sessionmaker, scoped_session, declarative_base
 from redis import Redis, ConnectionPool
 from settings.env import REDIS_HOST, REDIS_PASSWORD, REDIS_PORT, REDIS_INDEX
 
+from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
+
 
 def create_app() -> FastAPI:
     app = FastAPI(title="My API")
@@ -14,34 +16,40 @@ def create_app() -> FastAPI:
 
 
 # Redis
-def get_redis_client() -> Redis:
-    pool = ConnectionPool(
-        host=REDIS_HOST,
-        port=REDIS_PORT,
-        password=REDIS_PASSWORD,
-        db=REDIS_INDEX,
-        decode_responses=True,
-    )
-    return Redis(connection_pool=pool)
-
-
-cache_queue = get_redis_client()
-Base = declarative_base()
-engine = create_engine(
+# def get_redis_client() -> Redis:
+#     pool = ConnectionPool(
+#         host=REDIS_HOST,
+#         port=REDIS_PORT,
+#         password=REDIS_PASSWORD,
+#         db=REDIS_INDEX,
+#         decode_responses=True,
+#     )
+#     return Redis(connection_pool=pool)
+#
+#
+# cache_queue = get_redis_client()
+# Base = declarative_base()
+engine = create_async_engine(
     PGSQL_URL,
-    pool_size=10,
-    max_overflow=20,
-    pool_timeout=30,
-    pool_recycle=1800,
-    pool_pre_ping=True,
+    # pool_size=10,
+    # max_overflow=20,
+    # pool_timeout=30,
+    # pool_recycle=1800,
+    # pool_pre_ping=True,
     echo=False,
-    future=True,
+    # future=True,
+    connect_args={"timeout": 10}
 )
-SessionLocal = sessionmaker(
-    autocommit=False,
-    autoflush=False,
-    expire_on_commit=False,
-    bind=engine,
-)
+# SessionLocal = sessionmaker(
+#     autocommit=False,
+#     autoflush=False,
+#     expire_on_commit=False,
+#     bind=engine,
+# )
 # 如果你想要线程安全的 session，也可以这么写
-DBSession = scoped_session(SessionLocal)
+# DBSession = scoped_session(SessionLocal)
+async_session = async_sessionmaker(
+    engine,
+    expire_on_commit=False,
+    class_=AsyncSession,
+)
