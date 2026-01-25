@@ -20,14 +20,14 @@ consumer = RabbitMQConsumer(queue_name="my_queue")
 #
 #
 # # ========= 创建数据表实例 =========
-async def create_db():
-    async with engine.begin() as conn:
-        # 打印现有表
-        inspector = await conn.run_sync(lambda conn: inspect(conn).get_table_names())
-        print(inspector)
-
-        # 创建表
-        await conn.run_sync(Base.metadata.create_all)
+# async def create_db():
+#     async with engine.begin() as conn:
+#         # 打印现有表
+#         inspector = await conn.run_sync(lambda conn: inspect(conn).get_table_names())
+#         print(inspector)
+#
+#         # 创建表
+#         await conn.run_sync(Base.metadata.create_all)
     # inspector = inspect(engine)
     # existing_tables = set(inspector.get_table_names())
     #
@@ -43,21 +43,22 @@ async def create_db():
 #
 #
 # # ========= lifespan 生命周期处理器 =========
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    # ✅ 启动前，创建数据库表（如果不存在）
-    await create_db()
-    # 启动前
-    asyncio.create_task(consumer.consume(handle_message))
-    print("🐇 RabbitMQ consumer started (via lifespan)")
-    yield
-    # 关闭时（可选）
-    await consumer.close()
-    print("🔌 RabbitMQ consumer closed.")
+# @asynccontextmanager
+# async def lifespan(app: FastAPI):
+#     # ✅ 启动前，创建数据库表（如果不存在）
+#     await create_db()
+#     # 启动前
+#     asyncio.create_task(consumer.consume(handle_message))
+#     print("🐇 RabbitMQ consumer started (via lifespan)")
+#     yield
+#     # 关闭时（可选）
+#     await consumer.close()
+#     print("🔌 RabbitMQ consumer closed.")
 
 
 # ========= 创建 app 实例 =========
-app = FastAPI(lifespan=lifespan)
+# app = FastAPI(lifespan=lifespan)
+app = FastAPI()
 
 
 # 跨域配置
@@ -83,10 +84,8 @@ app.include_router(comment_router, prefix='/comment', tags=['文章评论'])
 app.include_router(friend_link_router, prefix='/friend/links', tags=['友链'])
 app.include_router(visit_log_router, prefix='/logger', tags=['日志'])
 app.include_router(donation_router, prefix='/donation', tags=['打赏'])
+app.include_router(feeback_router, prefix='/feeback', tags=['意见反馈'])
 app.include_router(chat_router.router, prefix='/chat', tags=['聊天室'])
-# app.include_router(monthes_router, prefix='/auth', tags=['客服'])
-# app.include_router(finance_router, prefix='/finance', tags=['财务'])
-app.include_router(terminus_router, prefix='/terminus', tags=['终端'])
 
 
 # ========= 启动 =========

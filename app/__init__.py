@@ -6,6 +6,4 @@ from app.donation import donation_router
 from app.category import category_router
 from app.visit_log import visit_log_router
 from app.friend_link import friend_link_router
-from app.monthes import monthes_router
-from app.finance import finance_router
-from app.terminus import terminus_router
+from app.feedback import feeback_router
