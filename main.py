@@ -5,6 +5,7 @@ from model.models import model
 from sqlalchemy import inspect
 from mq.handle import handle_message
 from config.config import Base, engine
+from settings.llm_service import llm_service
 from contextlib import asynccontextmanager
 from fastapi.staticfiles import StaticFiles
 from mq.rabbitmq_consumer import RabbitMQConsumer
@@ -48,6 +49,17 @@ async def lifespan(app: FastAPI):
     print("🔌 RabbitMQ consumer closed.")
 
 
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+
+    llm_service.load_model()
+
+    yield
+
+    print("应用关闭")
+
+
+
 # ========= 创建 app 实例 =========
 app = FastAPI(lifespan=lifespan)
 
@@ -75,6 +87,10 @@ app.include_router(comment_router, prefix='/comment', tags=['文章评论'])
 app.include_router(friend_link_router, prefix='/friend/links', tags=['友链'])
 app.include_router(visit_log_router, prefix='/logger', tags=['日志'])
 app.include_router(donation_router, prefix='/donation', tags=['打赏'])
+app.include_router(chat_router.router, prefix='/chats', tags=['聊天室'])
+app.include_router(router, prefix="/llm", tags=["LLM"])
+# app.include_router(finance_router, prefix='/finance', tags=['财务'])
+# app.include_router(terminus_router, prefix='/terminus', tags=['终端'])
 
 
 # ========= 启动 =========

@@ -1,8 +1,9 @@
 from datetime import datetime
 from settings.tools.tool import tool_tool
 from config.config import Base
+from decimal import Decimal
 from sqlalchemy.dialects.postgresql import ARRAY, JSONB
-from sqlalchemy import Column, Integer, String, DateTime, JSON, TEXT, Date, Boolean, Text
+from sqlalchemy import Column, Integer, String, DateTime, JSON, TEXT, Date, Boolean, Text, Numeric
 
 
 '''Postgres'''
