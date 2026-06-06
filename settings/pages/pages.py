@@ -20,7 +20,3 @@ class Page:
 
 
 pages = Page()
-
-# str = 'Apple USA XHYDV2MHZ9Q7Q4GR 50 4.77 '
-# str = 'Apple USA XHYDV2MHZ9Q7Q4GR 50 4.77'
-# print(str.split(' '))
