@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 debug = False
 daemon = False
 bind = '0.0.0.0:8002'  # 绑定ip和端口号
@@ -15,6 +16,8 @@ chdir = '/alfred-server'
 
 accesslog = "/alfred-server/log/gunicorn/success.log"      # 访问日志文件
 =======
+=======
+>>>>>>> 0777373f21e0c452f517fc61993d926a082a1fd0
 debug = False
 daemon = False
 bind = '0.0.0.0:8002'  # 绑定ip和端口号
@@ -30,5 +33,8 @@ access_log_format = '%(t)s %(p)s %(h)s "%(r)s" %(s)s %(L)s %(b)s %(f)s" "%(a)s"'
 chdir = '/alfred-server'
 
 accesslog = "/alfred-server/log/gunicorn/success.log"      # 访问日志文件
+<<<<<<< HEAD
 >>>>>>> 0777373 (2026-06-06)
+=======
+>>>>>>> 0777373f21e0c452f517fc61993d926a082a1fd0
 errorlog = "/alfred-server/log/gunicorn/error.log"        # 错误日志文件

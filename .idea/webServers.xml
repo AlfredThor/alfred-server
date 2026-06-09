@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="WebServers">
@@ -13,6 +14,8 @@
     </option>
   </component>
 =======
+=======
+>>>>>>> 0777373f21e0c452f517fc61993d926a082a1fd0
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="WebServers">
@@ -26,5 +29,8 @@
       </webServer>
     </option>
   </component>
+<<<<<<< HEAD
 >>>>>>> 0777373 (2026-06-06)
+=======
+>>>>>>> 0777373f21e0c452f517fc61993d926a082a1fd0
 </project>

@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 2025-08-03 23:19:01,762 - my_logger - ERROR - 添加数据错误! 模型: <class 'model.models.model.Monthes'> 数据: {'curd': {'fuk_dan': Decimal('57969'), 'user_bank_name': '', 'user_bank_number': '', 'user_name': 'Oseni Ibrahim', 'card_type': 'Razer', 'card_country': 'USA', 'card_code': '15563082346563', 'card_balance': Decimal('50'), 'card_rate': Decimal('5.4')}, 'is_commit': True} 报错信息: (psycopg2.errors.NotNullViolation) null value in column "work_type" of relation "monthes" violates not-null constraint
 DETAIL:  Failing row contains (3, 5c523e39af5c4b36a3c532baa7f600b9, null, null, null, null, Oseni Ibrahim, Razer, USA, 15563082346563, 57969.00, , , 50.00, 5.40, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, null, null, 0, 2025-08-03 23:18:16.052291, 2025-08-03 23:18:16.052414).
 
@@ -11,6 +12,8 @@ DETAIL:  Failing row contains (3, 5c523e39af5c4b36a3c532baa7f600b9, null, null, 
 
 (Background on this error at: https://sqlalche.me/e/20/e3q8)
 =======
+=======
+>>>>>>> 0777373f21e0c452f517fc61993d926a082a1fd0
 2025-08-02 22:39:25,581 - my_logger - ERROR - 添加数据错误! 模型: <class 'model.models.model.Monthes'> 数据: {'curd': {'work_type': '夜班', 'serial': 1, 'auth_name': '客服一号', 'equipment': '设备以', 'user_name': 'Jason Thor'}, 'is_commit': True} 报错信息: (psycopg2.ProgrammingError) can't adapt type 'Numeric'
 [SQL: INSERT INTO monthes (uuid, work_type, serial, auth_name, equipment, user_name, card_type, card_country, card_code, card_balance, card_rate, acquisition, selling, rate, handling, naila_balance, money, channel, img, status, create_time, update_time) VALUES (%(uuid)s, %(work_type)s, %(serial)s, %(auth_name)s, %(equipment)s, %(user_name)s, %(card_type)s, %(card_country)s, %(card_code)s, %(card_balance)s, %(card_rate)s, %(acquisition)s, %(selling)s, %(rate)s, %(handling)s, %(naila_balance)s, %(money)s, %(channel)s, %(img)s, %(status)s, %(create_time)s, %(update_time)s) RETURNING monthes.id]
 [parameters: {'uuid': 'a8f64143e03c4c9c9ed64753adeebfec', 'work_type': '夜班', 'serial': 1, 'auth_name': '客服一号', 'equipment': '设备以', 'user_name': 'Jason Thor', 'card_type': None, 'card_country': None, 'card_code': None, 'card_balance': Numeric(precision=0), 'card_rate': Numeric(precision=0), 'acquisition': Numeric(precision=0), 'selling': Numeric(precision=0), 'rate': Numeric(precision=0), 'handling': Numeric(precision=0), 'naila_balance': Numeric(precision=0), 'money': Numeric(precision=0), 'channel': None, 'img': None, 'status': 0, 'create_time': datetime.datetime(2025, 8, 2, 22, 38, 46, 265180), 'update_time': datetime.datetime(2025, 8, 2, 22, 38, 46, 265180)}]
@@ -149,4 +152,7 @@ DETAIL:  Failing row contains (20, 791d832254a14ad9bfce1b5c28a15784, 夜班, 3, 
 [SQL: INSERT INTO monthes (uuid, work_type, serial, auth_name, equipment, user_name, card_type, card_country, card_code, card_balance, card_rate, acquisition, selling, rate, handling, naila_balance, money, channel, img, status, create_time, update_time) VALUES (%(uuid)s, %(work_type)s, %(serial)s, %(auth_name)s, %(equipment)s, %(user_name)s, %(card_type)s, %(card_country)s, %(card_code)s, %(card_balance)s, %(card_rate)s, %(acquisition)s, %(selling)s, %(rate)s, %(handling)s, %(naila_balance)s, %(money)s, %(channel)s, %(img)s, %(status)s, %(create_time)s, %(update_time)s) RETURNING monthes.id]
 [parameters: {'uuid': '791d832254a14ad9bfce1b5c28a15784', 'work_type': '夜班', 'serial': 3, 'auth_name': '客服二号', 'equipment': '设备二', 'user_name': 'Jas 噶士大夫', 'card_type': None, 'card_country': None, 'card_code': None, 'card_balance': Decimal('0.00'), 'card_rate': Decimal('0.00'), 'acquisition': Decimal('0.00'), 'selling': Decimal('0.00'), 'rate': Decimal('0.00'), 'handling': Decimal('0.00'), 'naila_balance': Decimal('0.00'), 'money': Decimal('0.00'), 'channel': None, 'img': None, 'status': 0, 'create_time': datetime.datetime(2025, 8, 2, 22, 47, 8, 802476), 'update_time': datetime.datetime(2025, 8, 2, 22, 47, 8, 802476)}]
 (Background on this error at: https://sqlalche.me/e/20/gkpj)
+<<<<<<< HEAD
 >>>>>>> 0777373 (2026-06-06)
+=======
+>>>>>>> 0777373f21e0c452f517fc61993d926a082a1fd0

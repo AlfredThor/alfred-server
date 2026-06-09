@@ -53,4 +53,5 @@ class ChatRouter:
 
         return BaseCurd(db, ChatMessage).query_(search_dict)
 
+
 chat_router = ChatRouter()  # 導出實際 router 給主程序掛載
