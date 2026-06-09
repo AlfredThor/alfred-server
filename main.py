@@ -2,61 +2,15 @@ import asyncio
 from app import *
 from fastapi import FastAPI
 from model.models import model
-from settings.llm_service import llm_service
 from sqlalchemy import inspect
-from mq.handle import handle_message
 from config.config import engine
 from model.models.model import Base
+from mq.handle import handle_message
 from contextlib import asynccontextmanager
 from fastapi.staticfiles import StaticFiles
+from settings.llm_service import llm_service
 from mq.rabbitmq_consumer import RabbitMQConsumer
 from fastapi.middleware.cors import CORSMiddleware
-
-
-# ========= RabbitMQ 配置 =========
-
-
-# 创建消费者实例
-# consumer = RabbitMQConsumer(queue_name="my_queue")
-#
-#
-# # ========= 创建数据表实例 =========
-# async def create_db():
-#     async with engine.begin() as conn:
-#         # 打印现有表
-#         inspector = await conn.run_sync(lambda conn: inspect(conn).get_table_names())
-#         print(inspector)
-#
-#         # 创建表
-#         await conn.run_sync(Base.metadata.create_all)
-    # inspector = inspect(engine)
-    # existing_tables = set(inspector.get_table_names())
-    #
-    # print("🔍 已加载模型表:", [t.name for t in Base.metadata.sorted_tables])
-    #
-    # for table in Base.metadata.sorted_tables:
-    #     if table.name not in existing_tables:
-    #         print(f"✅ 创建表：{table.name}")
-    #     else:
-    #         print(f"⏩ 跳过已有表：{table.name}")
-    #
-    # Base.metadata.create_all(bind=engine)
-#
-#
-# # ========= lifespan 生命周期处理器 =========
-# @asynccontextmanager
-# async def lifespan(app: FastAPI):
-#     # ✅ 启动前，创建数据库表（如果不存在）
-#     await create_db()
-#     # 启动前
-#     asyncio.create_task(consumer.consume(handle_message))
-#     print("🐇 RabbitMQ consumer started (via lifespan)")
-#     yield
-#     # 关闭时（可选）
-#     await consumer.close()
-#     print("🔌 RabbitMQ consumer closed.")
-
-# ========= RabbitMQ 配置 =========
 
 
 # 创建消费者实例
